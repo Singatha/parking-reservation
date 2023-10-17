@@ -41,6 +41,9 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+parking-email-notification-service/node_modules/
+parking-reservation-bff/node_modules/
+parking-reservation-service/node_modules/
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
