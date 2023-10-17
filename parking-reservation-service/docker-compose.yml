@@ -9,6 +9,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: parkingreservationDB
+    volumes:
+      - parking-reservation-mysql-data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-ppassword"]
       interval: 5s
@@ -30,6 +32,17 @@ services:
         condition: service_healthy
     networks:
       - parking-reservation-net
+  redis-publisher:
+    image: redis
+    container_name: redis-publisher
+    command: ["redis-server", "--port", "6379"]
+    ports:
+      - "6379:6379"
+    networks:
+      - parking-reservation-net
 
 networks:
   parking-reservation-net:
+
+volumes:
+  todo-mysql-data:
