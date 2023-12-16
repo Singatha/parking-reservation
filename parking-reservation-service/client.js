@@ -2,7 +2,7 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 
-const parkingProtoPath = './protos/parking.proto';
+const parkingProtoPath = '../parking-reservation-protos/parking-reservation.proto';
 const packageDefinition = protoLoader.loadSync(parkingProtoPath, {
   keepCase: true,
   longs: String,

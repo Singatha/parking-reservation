@@ -3,10 +3,10 @@ const Redis = require('ioredis');
 
 // Nodemailer setup
 const transporter = nodemailer.createTransport({
-  service: 'YourEmailService',
+  service: 'gmail',
   auth: {
-    user: 'YourEmailAddress',
-    pass: 'YourEmailPassword',
+    user: 'xhantisingatha@gmail.com',
+    pass: 'singatha',
   },
 });
 

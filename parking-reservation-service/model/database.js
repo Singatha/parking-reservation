@@ -2,13 +2,11 @@ const mysql = require('mysql2');
 
 // Database configuration
 const connection = mysql.createConnection({
-  host: "mysql-db",
+  host: "mysql-parking-service-db",
   user: "root",
   password: "password",
   database: "parkingreservationDB",
 });
-
-// Create a connection
 
 // Create the Parking table
 connection.connect((err) => {
@@ -62,3 +60,7 @@ connection.connect((err) => {
     console.log(result);
   });
 });
+
+module.exports = {
+  connection
+};

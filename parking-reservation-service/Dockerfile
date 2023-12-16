@@ -1,7 +1,8 @@
+FROM parking-reservation-dynamic-protos AS proto_build
 FROM node:16
 
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
@@ -14,6 +15,7 @@ RUN npm install
 
 # Bundle app source
 COPY . .
+COPY --from=proto_build . ./
 
 EXPOSE 50051
 CMD [ "node", "server.js" ]

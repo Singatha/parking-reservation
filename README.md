@@ -3,8 +3,6 @@
 A parking system API for reserving and managing parking.
 
 
-
-
 ## Run Locally
 
 Clone the project
@@ -49,6 +47,3 @@ To compose down run
 - Authentication
 - Caching
 - Security
-
-
-
