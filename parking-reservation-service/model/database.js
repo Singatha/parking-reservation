@@ -21,7 +21,6 @@ connection.connect((err) => {
     is_available BOOLEAN
   )`, (err, result, fields) => {
     if (err) throw err;
-    console.log(result);
   });
 });
 
@@ -38,7 +37,6 @@ connection.connect((err) => {
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   )`, (err, result, fields) => {
     if (err) throw err;
-    console.log(result);
   });
 });
 
@@ -57,7 +55,6 @@ connection.connect((err) => {
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   )`, (err, result, fields) => {
     if (err) throw err;
-    console.log(result);
   });
 });
 

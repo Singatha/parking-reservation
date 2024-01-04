@@ -1,11 +1,11 @@
 const express = require('express');
-const parkingReservation = express.Router();
-const { parkingReservationClient }= require('../controllers/client.js');
+const vehicleRoute = express.Router();
+const { parkingReservationClient } = require('../controllers/client.js');
 const { verifyToken } = require('../lib/utils.js');
 
-parkingReservation.get('/list', verifyToken, (req, res) => {
+vehicleRoute.post('/add', verifyToken, (req, res) => {
   try {
-    parkingReservationClient.getParkingSpaceList({}, (error, response) => {
+    parkingReservationClient.addVehicle(req.body, (error, response) => {
       if (!error) {
         // console.log('Parking Space List fetched:', response);
         res.status(200);
@@ -22,9 +22,9 @@ parkingReservation.get('/list', verifyToken, (req, res) => {
   }
 });
 
-parkingReservation.post('/reserve', verifyToken, (req, res) => {
+vehicleRoute.post('/edit', verifyToken, (req, res) => {
   try {
-    parkingReservationClient.reserveParking(req.body, (error, response) => {
+    parkingReservationClient.editVehicle(req.body, (error, response) => {
       if (!error) {
         // console.log('Parking Space List fetched:', response);
         res.status(200);
@@ -41,9 +41,9 @@ parkingReservation.post('/reserve', verifyToken, (req, res) => {
   }
 });
 
-parkingReservation.get('/cancel', verifyToken, (req, res) => {
+vehicleRoute.get('/remove', verifyToken, (req, res) => {
   try {
-    parkingReservationClient.cancelParkingReservation(req.body, (error, response) => {
+    parkingReservationClient.removeVehicle(req.body, (error, response) => {
       if (!error) {
         // console.log('Parking Space List fetched:', response);
         res.status(200);
@@ -60,4 +60,4 @@ parkingReservation.get('/cancel', verifyToken, (req, res) => {
   }
 });
 
-module.exports = parkingReservation;
+module.exports = vehicleRoute;

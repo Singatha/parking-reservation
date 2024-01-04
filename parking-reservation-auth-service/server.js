@@ -1,9 +1,9 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
-const registerUser = require('./service/parking-reservation-auth.js');
+const { register, login, getUser } = require('./service/parkingReservationAuth.js');
 
 // gRPC setup
-const authProtoPath = './parking-reservation-protos/parking-reservation-auth.proto';
+const authProtoPath = './parking-reservation-protos/parking_reservation_auth.proto';
 const packageDefinition = protoLoader.loadSync(authProtoPath, {
   keepCase: true,
   longs: String,
@@ -16,7 +16,9 @@ const grpcServer = new grpc.Server();
 
 // Define gRPC service methods
 grpcServer.addService(authPackage.AuthService.service, {
-  registerUser: registerUser,
+  register: register,
+  login: login,
+  getUser: getUser,
 });
 
 // Start gRPC server
@@ -24,3 +26,6 @@ grpcServer.bindAsync('0.0.0.0:50052', grpc.ServerCredentials.createInsecure(), (
   console.log('gRPC server is running on port 50052');
   grpcServer.start();
 });
+
+// need to send a welcome email
+// need to create password reset flow

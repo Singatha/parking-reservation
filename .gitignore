@@ -46,6 +46,8 @@ parking-reservation-auth-service/node_modules/
 parking-reservation-bff/node_modules/
 parking-reservation-service/node_modules/
 
+parking-reservation-auth-service/id_rsa_priv.pem
+
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
