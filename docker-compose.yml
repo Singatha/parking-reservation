@@ -47,6 +47,15 @@ services:
   parking-reservation-protobufs:
     image: parking-reservation-dynamic-protos
     build: ./parking-reservation-protos
+  parking-email-notification-service-backend:
+    image: parking-email-notification-service-backend
+    container_name: parking-email-notification-service
+    restart: always
+    build: ./parking-email-notification-service
+    depends_on:
+      - redis-publisher
+    networks:
+      - parking-reservation-net
   parking-reservation-service-backend:
     image: parking-reservation-service-backend
     container_name: parking-reservation-service

@@ -1,9 +1,11 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
-const getParkingSpace = require('./service/parking-reservation.js');
+const { reserveParking, cancelParkingReservation } = require('./service/parkingReservation.js');
+const { getParkingSpace, addParkingSpace, editParkingSpace, removeParkingSpace } = require('./service/parkingSpace.js');
+const { addVehicle, editVehicle, removeVehicle } = require('./service/vehicle.js');
 
 // gRPC setup
-const parkingProtoPath = './parking-reservation-protos/parking-reservation.proto';
+const parkingProtoPath = './parking-reservation-protos/parking_reservation.proto';
 const packageDefinition = protoLoader.loadSync(parkingProtoPath, {
   keepCase: true,
   longs: String,
@@ -15,8 +17,16 @@ const parkingPackage = grpc.loadPackageDefinition(packageDefinition).parking;
 const grpcServer = new grpc.Server();
 
 // Define gRPC service methods
-grpcServer.addService(parkingPackage.ParkingSpaceService.service, {
+grpcServer.addService(parkingPackage.ParkingReservationService.service, {
   getParkingSpaceList: getParkingSpace,
+  addParkingSpace: addParkingSpace,
+  editParkingSpace: editParkingSpace,
+  removeParkingSpace: removeParkingSpace,
+  addVehicle: addVehicle,
+  editVehicle: editVehicle,
+  removeVehicle: removeVehicle,
+  reserveParking: reserveParking,
+  cancelParkingReservation: cancelParkingReservation,
 });
 
 // Start gRPC server

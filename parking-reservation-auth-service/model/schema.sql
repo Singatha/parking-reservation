@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS User (
     user_id INT PRIMARY KEY AUTO_INCREMENT,
     user_hash VARCHAR(255) NOT NULL,
+    user_salt VARCHAR(255) NOT NULL,
     user_email VARCHAR(255) NOT NULL,
     user_name VARCHAR(255) NOT NULL,
     user_first_name VARCHAR(255) NOT NULL,

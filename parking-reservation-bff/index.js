@@ -1,11 +1,19 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
-const auth = require('./routes/authRoutes');
+const authRoute = require('./routes/authRoutes');
+const vehicleRoute = require('./routes/vehicleRoutes');
+const parkingSpaceRoute = require('./routes/parkingReservationRoutes');
 const parkingReservation = require('./routes/parkingReservationRoutes');
 
-app.use('/api/auth', auth);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use('/api/auth', authRoute);
+app.use('/api/vehicle', vehicleRoute);
+app.use('/api/parking-space', parkingSpaceRoute);
 app.use('/api/parking', parkingReservation);
 
 app.listen(port, () => {
