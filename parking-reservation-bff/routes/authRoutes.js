@@ -29,6 +29,47 @@ authRoute.post('/register', (req, res) => {
   }
 });
 
+authRoute.post('/forgot/password', (req, res) => {
+  try {
+    console.log(req.body);
+    parkingReservationAuthClient.forgotPassword(req.body, (error, response) => {
+
+      if (!error) {
+        // console.log('User logged in successfully', response);
+        res.status(200);
+        res.json(response);
+        return response;
+      } else {
+        // console.error('Failed to login user :', error);
+        return error;
+      }
+    });
+  } catch(err){
+    res.status(401);
+    res.json(err);
+  }
+});
+
+authRoute.post('/reset/password', (req, res) => {
+  try {
+    // console.log(req);
+    parkingReservationAuthClient.resetPassword({ url_token: req.query.token, user_email: req.query.email, new_password: req.body.new_password, confirm_password: req.body.confirm_password }, (error, response) => {
+      if (!error) {
+        // console.log('User logged in successfully', response);
+        res.status(200);
+        res.json(response);
+        return response;
+      } else {
+        // console.error('Failed to login user :', error);
+        return error;
+      }
+    });
+  } catch(err){
+    res.status(401);
+    res.json(err);
+  }
+});
+
 authRoute.post('/login', (req, res) => {
   try {
     parkingReservationAuthClient.login(req.body, (error, response) => {

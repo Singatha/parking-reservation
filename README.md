@@ -11,20 +11,12 @@ Clone the project
   git clone https://github.com/Singatha/parking-reservation.git
 ```
 
-Go to the project directory if you want to work on the bff
+To run the project, go to the project folder
 
 ```bash
-  cd parking-reservation/parking-reservation-bff
+  cd parking-reservation
 ```
-
-```bash
-  docker build -t .
-```
-
-Go to the project directory if you want to work on the parking reservation service
-```bash
-  cd parking-reservation/parking-reservation-bff
-```
+and run
 
 ```bash
   docker-compose up --build
@@ -33,17 +25,34 @@ Go to the project directory if you want to work on the parking reservation servi
 To compose down run
 
 ```bash
+  docker-compose down
+```
+
+To compose down run and remove images
+
+```bash
   docker-compose down --rmi all
 ```
+
+To compose down run, remove images and volumes
+
+```bash
+  docker-compose down -v --rmi all
+```
+
 ## Authors
 
 - [@singatha](https://www.github.com/singatha)
 
 - [@charbileigh](https://www.github.com/charbileigh)
+
 ## Roadmap
 
-- Adding endpoints
-- Error handling
+- Add Emails
+  - Reservation Email
+  - Invoice Email
 - Authentication
+  - add OAuth authentication (google, facebook, github, ..etc) 
+- Payment Gateway Service
 - Caching
 - Security
