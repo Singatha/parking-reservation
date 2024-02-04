@@ -1,13 +1,31 @@
 const grpc = require('@grpc/grpc-js');
 const { connection } = require('../model/database.js');
 
+async function getVehicle(call, callback){
+  const { request: { user_id } } = call;
+  try {
+    await connection.connect((err) => {
+      if (err) throw err;
+      const sqlQuery = "SELECT * FROM Vehicle WHERE Vehicle.user_id = ?";
+      const queryValues = [user_id];
+      connection.query(sqlQuery, queryValues, (err, result, fields) => {
+        if (err) throw err;        
+        callback(null, { message : "Fetched Vehicle record successfully" });
+      });
+    });
+  } catch (error) {
+    console.error('Error fetching vehicle record:', error);
+    callback({ code: grpc.status.INTERNAL, details: 'Unable to fetching vehicle record' });
+  }
+};
+
 async function addVehicle(call, callback){
-	console.log(call, "tf is call?");
+  const { request: { user_id, vehicle_name, vehicle_license_plate } } = call;
   try {
     await connection.connect((err) => {
       if (err) throw err;
       const sqlQuery = "INSERT INTO Vehicle (user_id, vehicle_name, vehicle_license_plate, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())";
-      const queryValues = [call.user_id, call.vehicle_name, call.vehicle_license_plate];
+      const queryValues = [user_id, vehicle_name, vehicle_license_plate];
       connection.query(sqlQuery, queryValues, (err, result, fields) => {
         if (err) throw err;        
         callback(null, { message : "Inserted Vehicle record successfully" });
@@ -20,11 +38,12 @@ async function addVehicle(call, callback){
 };
 
 async function editVehicle(call, callback){
+  const { request: { user_id, vehicle_name, vehicle_license_plate } } = call;
   try {
     await connection.connect((err) => {
       if (err) throw err;
-      const sqlQuery = "UPDATE Vehicle SET ? WHERE Vehicle.user_id?";
-      const queryValues = [call.vehicle_name, call.vehicle_license_plate, call.user_id];
+      const sqlQuery = "UPDATE Vehicle SET Vehicle.vehicle_name = ?, Vehicle.vehicle_license_plate = ? WHERE Vehicle.user_id = ?";
+      const queryValues = [vehicle_name, vehicle_license_plate, user_id];
       connection.query(sqlQuery, queryValues, (err, result, fields) => {
         if (err) throw err;        
         callback(null, { message : "Edited Vehicle record successfully" });
@@ -37,11 +56,12 @@ async function editVehicle(call, callback){
 };
 
 async function removeVehicle(call, callback){
+  const { request: { user_id, vehicle_name } } = call;
   try {
     await connection.connect((err) => {
       if (err) throw err;
       const sqlQuery = "DELETE FROM Vehicle WHERE Vehicle.user_id = ? AND Vehicle.vehicle_name = ?";
-      const queryValues = [call.user_id, call.vehicle_name];
+      const queryValues = [user_id, vehicle_name];
       connection.query(sqlQuery, queryValues, (err, result, fields) => {
         if (err) throw err;        
         callback(null, { message : "Deleted Vehicle record successfully" });
@@ -54,6 +74,7 @@ async function removeVehicle(call, callback){
 };
 
 module.exports = {
+  getVehicle,
 	addVehicle,
 	editVehicle,
 	removeVehicle

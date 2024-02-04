@@ -3,10 +3,10 @@ const Redis = require('ioredis');
 
 // Nodemailer setup
 const transporter = nodemailer.createTransport({
-  service: 'test',
+  service: 'gmail',
   auth: {
-    user: 'test@test.com',
-    pass: 'test',
+    user: 'xhantisingatha@gmail.com',
+    pass: 'fttn qwrm knbn ubtj',
   },
 });
 
@@ -29,20 +29,25 @@ redis.on('message', (channel, message) => {
   console.log(message, "from subscriber");
   // Parse the message into an object
   const emailData = JSON.parse(message);
-
+  console.log(emailData, "parse json");
   // Send the email
-  sendEmail(emailData);
+  if (emailData.event_type === "welcome"){
+    sendEmail(emailData, "welcome-template");
+  } else if (emailData.event_type === "forgot_password"){
+    sendEmail(emailData, "forgot-password");  
+  }
+  
 });
 
 // Send Email
-async function sendEmail(emailData) {
+async function sendEmail(emailData, templateName) {
   // Load the email template
-  const template = await loadEmailTemplate('./email-templates/email-template.hbs', emailData);
+  const template = await loadEmailTemplate(`./email-templates/${templateName}.hbs`, emailData);
 
   // Send the email
   await transporter.sendMail({
-    from: 'test@test.com',
-    to: 'test@test.com',
+    from: 'xhantisingatha@gmail.com',
+    to: 'xhantisingatha@gmail.com',
     subject: 'Email Sent via Pub/Sub',
     html: template,
   });
