@@ -92,6 +92,22 @@ services:
       - parking-reservation-auth-service-backend
     networks:
       - parking-reservation-net
+  parking-reservation-ui:
+    image: parking-reservation-ui
+    container-name: parking-reservation-frontend
+    build: ./parking-reservation-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - parking-reservation-api
+    volumes:
+     - .:/app
+     - ./node_modules:/app/node_modules
+    environment:
+      NODE_ENV: development
+    stdin_open: true
+    tty: true
+    command: npm run dev
 
 networks:
   parking-reservation-net:
@@ -99,3 +115,4 @@ networks:
 volumes:
   parking-reservation-service-mysql-data:
   parking-auth-service-mysql-data:
+  node_modules:
